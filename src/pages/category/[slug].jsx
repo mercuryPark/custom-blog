@@ -1,9 +1,9 @@
+import { useRouter } from 'next/router'
+import { getAllArticles } from '@/lib/getAllArticles'
 import Head from 'next/head'
-
 import { Card } from '@/components/Card'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import { formatDate } from '@/lib/formatDate'
-import { getAllArticles } from '@/lib/getAllArticles'
 
 function Article({ article }) {
   return (
@@ -18,7 +18,7 @@ function Article({ article }) {
           className="md:hidden"
           decorate
         >
-          {formatDate(article.date)}
+          {formatDate(article?.date)}
         </Card.Eyebrow>
         <Card.Description>{article.description}</Card.Description>
         <Card.Cta>Read article</Card.Cta>
@@ -28,14 +28,15 @@ function Article({ article }) {
         dateTime={article.date}
         className="mt-1 hidden md:block"
       >
-        {formatDate(article.date)}
+        {formatDate(article?.date)}
       </Card.Eyebrow>
     </article>
   )
 }
 
-export default function ArticlesIndex({ articles }) {
-  console.log(articles)
+export default function CategoryPage({ articles }) {
+  const router = useRouter()
+  console.log(router)
   return (
     <>
       <Head>
@@ -51,14 +52,30 @@ export default function ArticlesIndex({ articles }) {
       >
         <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
           <div className="flex max-w-3xl flex-col space-y-16">
-            {articles.map((article) => (
-              <Article key={article.slug} article={article} />
-            ))}
+            {articles.map(
+              (article) =>
+                router.query.slug == article.category && (
+                  <Article key={article.slug} article={article} />
+                )
+            )}
           </div>
         </div>
       </SimpleLayout>
     </>
   )
+}
+
+export async function getStaticPaths() {
+  // Fetch all articles to generate paths for dynamic routes
+  const articles = await getAllArticles()
+  console.log(articles)
+  // Generate paths for each article slug
+  const paths = articles.map((article) => ({
+    params: { slug: article?.category },
+  }))
+
+  // Return the paths object containing an array of all possible paths
+  return { paths, fallback: false }
 }
 
 export async function getStaticProps() {
