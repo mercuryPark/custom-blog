@@ -37,7 +37,7 @@ function Article({ article }) {
 export default function Home({ articles }) {
   // pagination
   const post = [...articles]
-  const perPage = 5
+  const perPage = 4
   const posts = post.slice(0, perPage)
   const totalPage = Math.ceil(articles?.length / perPage)
   const totalPages = Array.from({ length: totalPage }, (_, index) => index + 1)

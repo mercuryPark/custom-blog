@@ -37,7 +37,7 @@ const PostPage = ({ articles }) => {
   const post = [...articles]
   // per_page 를 알아야하고
   // 현재 페이지를 알아야함
-  const perPage = 5
+  const perPage = 4
   const totalPage = Math.ceil(articles?.length / perPage)
   const totalPages = Array.from({ length: totalPage }, (_, index) => index + 1)
 
@@ -93,7 +93,7 @@ export default PostPage
 export async function getStaticPaths() {
   // Fetch all articles to generate paths for dynamic routes
   const articles = await getAllArticles()
-  const perPage = 5
+  const perPage = 4
   const totalPage = Math.ceil(articles?.length / perPage)
   const totalPages = Array.from({ length: totalPage }, (_, index) => index + 1)
 
