@@ -35,7 +35,6 @@ function Article({ article }) {
 }
 
 export default function ArticlesIndex({ articles }) {
-  console.log(articles)
   return (
     <>
       <Head>

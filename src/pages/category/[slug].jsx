@@ -36,7 +36,7 @@ function Article({ article }) {
 
 export default function CategoryPage({ articles }) {
   const router = useRouter()
-  console.log(router)
+
   return (
     <>
       <Head>
@@ -68,7 +68,6 @@ export default function CategoryPage({ articles }) {
 export async function getStaticPaths() {
   // Fetch all articles to generate paths for dynamic routes
   const articles = await getAllArticles()
-  console.log(articles)
   // Generate paths for each article slug
   const paths = articles.map((article) => ({
     params: { slug: article?.category },

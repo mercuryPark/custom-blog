@@ -1,11 +1,8 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import clsx from 'clsx'
 import { useRouter } from 'next/router'
+
+import Head from 'next/head'
 import { useState } from 'react'
 
-import { Button } from '@/components/Button'
 import { Card } from '@/components/Card'
 import { Container } from '@/components/Container'
 
@@ -34,13 +31,19 @@ function Article({ article }) {
   )
 }
 
-export default function Home({ articles }) {
-  // pagination
+const PostPage = ({ articles }) => {
+  const router = useRouter()
+  const currentPage = router.query.page
   const post = [...articles]
+  // per_page 를 알아야하고
+  // 현재 페이지를 알아야함
   const perPage = 5
-  const posts = post.slice(0, perPage)
   const totalPage = Math.ceil(articles?.length / perPage)
   const totalPages = Array.from({ length: totalPage }, (_, index) => index + 1)
+
+  const startIndex = (currentPage - 1) * perPage
+  const endIndex = startIndex + perPage
+  const posts = post.slice(startIndex, endIndex)
 
   return (
     <>
@@ -83,6 +86,24 @@ export default function Home({ articles }) {
       </Container>
     </>
   )
+}
+
+export default PostPage
+
+export async function getStaticPaths() {
+  // Fetch all articles to generate paths for dynamic routes
+  const articles = await getAllArticles()
+  const perPage = 5
+  const totalPage = Math.ceil(articles?.length / perPage)
+  const totalPages = Array.from({ length: totalPage }, (_, index) => index + 1)
+
+  // Generate paths for each article slug
+  const paths = totalPages.map((page) => ({
+    params: { page: page.toString() },
+  }))
+
+  // Return the paths object containing an array of all possible paths
+  return { paths, fallback: false }
 }
 
 export async function getStaticProps() {
