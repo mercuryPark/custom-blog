@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import clsx from 'clsx'
+import Image from 'next/image'
 
 function ChevronRightIcon(props) {
   return (
@@ -17,7 +18,10 @@ function ChevronRightIcon(props) {
 export function Card({ as: Component = 'div', className, children }) {
   return (
     <Component
-      className={clsx(className, 'group relative flex flex-col items-start')}
+      className={clsx(
+        className,
+        'group relative flex flex-col items-start gap-6 lg:flex-row'
+      )}
     >
       {children}
     </Component>
@@ -60,6 +64,18 @@ Card.Cta = function CardCta({ children }) {
     >
       {children}
       <ChevronRightIcon className="ml-1 h-4 w-4 stroke-current" />
+    </div>
+  )
+}
+
+Card.Image = function CardImage({ children, src }) {
+  return (
+    <div className="z-50">
+      <Image
+        className="z-50 rounded-lg max-lg:h-full max-lg:w-full lg:max-w-[400px]"
+        alt="thumbnail_image"
+        src={src}
+      />
     </div>
   )
 }

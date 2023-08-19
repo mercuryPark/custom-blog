@@ -121,10 +121,9 @@ function MobileNavigation(props) {
             </div>
             <nav className="mt-6">
               <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
-                <MobileNavItem href="/category/test">Test</MobileNavItem>
-                <MobileNavItem href="/category/test1">Test1</MobileNavItem>
-                <MobileNavItem href="/category/test2">Test2</MobileNavItem>
-                <MobileNavItem href="/category/test3">Test3</MobileNavItem>
+                <MobileNavItem href="/category/test">실생활</MobileNavItem>
+                <MobileNavItem href="/category/test1">디자인</MobileNavItem>
+                <MobileNavItem href="/category/test2">개발</MobileNavItem>
               </ul>
             </nav>
           </Popover.Panel>
@@ -142,7 +141,7 @@ function NavItem({ href, children }) {
       <Link
         href={href}
         className={clsx(
-          'relative block px-3 py-2 transition',
+          'GmarketSansMedium relative block px-3 py-2 transition',
           isActive
             ? 'text-teal-500 dark:text-teal-400'
             : 'hover:text-teal-500 dark:hover:text-teal-400'
@@ -161,10 +160,11 @@ function DesktopNavigation(props) {
   return (
     <nav {...props}>
       <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
-        <NavItem href="/category/test">Test</NavItem>
-        <NavItem href="/category/test1">Test1</NavItem>
-        <NavItem href="/category/test2">Test2</NavItem>
-        <NavItem href="/category/test3">Test3</NavItem>
+        <NavItem className="GmarketSansMedium" href="/category/test">
+          실생활
+        </NavItem>
+        <NavItem href="/category/test1">개발</NavItem>
+        <NavItem href="/category/test2">디자인</NavItem>
       </ul>
     </nav>
   )
@@ -212,15 +212,7 @@ function clamp(number, a, b) {
 }
 
 function AvatarContainer({ className, ...props }) {
-  return (
-    <div
-      className={clsx(
-        className,
-        'h-10 w-10 rounded-full bg-white/90 p-0.5 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:ring-white/10'
-      )}
-      {...props}
-    />
-  )
+  return <div className="my-auto" {...props} />
 }
 
 function Avatar({ large = false, className, ...props }) {
@@ -231,16 +223,10 @@ function Avatar({ large = false, className, ...props }) {
       className={clsx(className, 'pointer-events-auto')}
       {...props}
     >
-      <Image
-        src={avatarImage}
-        alt=""
-        sizes={large ? '4rem' : '2.25rem'}
-        className={clsx(
-          'rounded-full bg-zinc-100 object-cover dark:bg-zinc-800',
-          large ? 'h-16 w-16' : 'h-9 w-9'
-        )}
-        priority
-      />
+      <span className="SBAggroB font-xs flex whitespace-nowrap text-xl">
+        <span className="text-3xl text-[#16b8a6]">랭킹</span>
+        <span className="mr-1 text-3xl dark:text-zinc-100">WEB</span>
+      </span>
     </Link>
   )
 }
@@ -351,62 +337,36 @@ export function Header() {
   return (
     <>
       <header
-        className="pointer-events-none relative z-50 flex flex-none flex-col"
+        className="pointer-events-none relative z-50 flex flex-none flex-col "
         style={{
           height: 'var(--header-height)',
           marginBottom: 'var(--header-mb)',
         }}
       >
-        {isHomePage && (
-          <>
-            <div
-              ref={avatarRef}
-              className="order-last mt-[calc(theme(spacing.16)-theme(spacing.3))]"
-            />
-            <Container
-              className="top-0 order-last -mb-3 pt-3"
-              style={{ position: 'var(--header-position)' }}
-            >
-              <div
-                className="top-[var(--avatar-top,theme(spacing.3))] w-full"
-                style={{ position: 'var(--header-inner-position)' }}
-              >
-                <div className="relative">
-                  <AvatarContainer
-                    className="absolute left-0 top-3 origin-left transition-opacity"
-                    style={{
-                      opacity: 'var(--avatar-border-opacity, 0)',
-                      transform: 'var(--avatar-border-transform)',
-                    }}
-                  />
-                  <Avatar
-                    large
-                    className="block h-16 w-16 origin-left"
-                    style={{ transform: 'var(--avatar-image-transform)' }}
-                  />
-                </div>
-              </div>
-            </Container>
-          </>
-        )}
+        <>
+          <div ref={avatarRef} className="order-last" />
+          <Container
+            className="top-0 order-last -mb-3 pt-3"
+            style={{ position: 'var(--header-position)' }}
+          ></Container>
+        </>
+
         <div
           ref={headerRef}
-          className="top-0 z-10 h-16 pt-6"
+          className="top-0 z-10 h-16 pt-6 "
           style={{ position: 'var(--header-position)' }}
         >
           <Container
             className="top-[var(--header-top,theme(spacing.6))] w-full"
             style={{ position: 'var(--header-inner-position)' }}
           >
-            <div className="relative flex gap-4">
+            <div className="relative flex gap-4 ">
               <div className="flex flex-1">
-                {!isHomePage && (
-                  <AvatarContainer>
-                    <Avatar />
-                  </AvatarContainer>
-                )}
+                <AvatarContainer>
+                  <Avatar />
+                </AvatarContainer>
               </div>
-              <div className="flex flex-1 justify-end md:justify-center">
+              <div className="flex flex-1 justify-end md:justify-center ">
                 <MobileNavigation className="pointer-events-auto md:hidden" />
                 <DesktopNavigation className="pointer-events-auto hidden md:block" />
               </div>

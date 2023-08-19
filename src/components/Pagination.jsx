@@ -5,7 +5,7 @@ export default function Pagination(props) {
   const { perPage, articles, totalPages } = props
 
   if (router.asPath == '/') {
-    router.query.page = 1
+    router.query.page = 5
   }
 
   return (
